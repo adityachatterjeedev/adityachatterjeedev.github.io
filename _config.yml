@@ -62,13 +62,10 @@ plugins:
 author:
   name   : "Aditya Chatterjee"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "ML Engineer \| CS Master's Student at NYU Courant \| Building with LLMs"
+  bio    : "ML Engineer • CS Master's Student at NYU Courant • Building with LLMs"
   email  : chatterjee2307@gmail.com
   github : adityachatterjeedev
   links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/adityachatterjeedev"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/aditya-chatterjee/"
