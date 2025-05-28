@@ -62,7 +62,7 @@ plugins:
 author:
   name   : "Aditya Chatterjee"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "ML Engineer | CS Master's Student at NYU Courant | Building with LLMs"
+  bio    : "ML Engineer \| CS Master's Student at NYU Courant \| Building with LLMs"
   email  : chatterjee2307@gmail.com
   github : adityachatterjeedev
   links:
