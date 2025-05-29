@@ -37,7 +37,7 @@ Product Lead for the team responsible for:
 -	Leading the team to train and fine-tune a Llama-2 instance on the company’s dataset and integrate the model into the company’s product offerings.
 
 **Software Engineer & Tech Consultant**, Keystone Strategy  
-*2022 – 2023* 
+*2022 – 2023*                  
 Consulted on innovative technological projects involving AI/ML, data analytics, algorithms, and digital transformation strategy for industry-leading companies.
 Highlights include:
 -	Developed and deployed to cloud a large-scale Machine Learning-based rewards system for one of the world’s top five (by popularity) video games.
