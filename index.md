@@ -1,7 +1,6 @@
 ---
 layout: home
 author_profile: true
-title: Aditya Chatterjee
 ---
 
 # Welcome
