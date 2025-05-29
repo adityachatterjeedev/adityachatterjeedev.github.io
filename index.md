@@ -31,6 +31,7 @@ Machine Learning Engineer within the Product Management team, responsible for im
 
 **Generative AI Engineer**, VideoMagic (Startup)  
 *2023*
+
 Product Lead for the team responsible for:
 -	Researching and evaluating open-source large language models (LLMs) to align with strategic business needs.
 -	Working with engineering and product teams to design and implement test cases to benchmark performance of LLMs.
