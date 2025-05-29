@@ -29,7 +29,8 @@ Machine Learning Engineer within the Product Management team, responsible for im
 -	Prototyping machine learning and business intelligence features before they are engineered into the final product to help deliver customized solutions for clients.
 -	Establishing reporting pipelines to summarize over 90 billion rows of data into simple, actionable insights to help fraud data managers at client sites make data-driven decisions.
 
-**Generative AI Engineer**, VideoMagic (Startup)  
+**Generative AI Engineer**, VideoMagic
+
 *2023*
 Product Lead for the team responsible for:
 -	Researching and evaluating open-source large language models (LLMs) to align with strategic business needs.
