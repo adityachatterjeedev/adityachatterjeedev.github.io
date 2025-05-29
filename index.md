@@ -15,7 +15,7 @@ I'm a Computer Science Master's student at NYU with a background in AI, LLMs, an
 **New York University** — MS in Computer Science  
 *Aug 2024 – Dec 2025*
 
-**Cornell University** — BSc in Computer Science, Minor in Mathematics  
+**Cornell University** — BS in Computer Science, Minor in Mathematics  
 *Graduated Cum Laude, 2022*
 
 ---
