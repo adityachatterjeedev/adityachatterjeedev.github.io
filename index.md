@@ -4,8 +4,6 @@ author_profile: true
 title: Homepage
 ---
 
-# Welcome
-
 I'm a Computer Science Master's student at NYU with a background in AI, LLMs, and robotics. This site is my public portfolio and blog, where I document my learning journey in deep learning and showcase projects I build along the way.
 
 ---
