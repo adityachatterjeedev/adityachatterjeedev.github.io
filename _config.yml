@@ -21,8 +21,9 @@ description: >- # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 #twitter_username: username
 github_username: username
-minimal_mistakes_skin: default
+minimal_mistakes_skin: dark
 search: true
+show_nav: true
 
 # Build settings
 markdown: kramdown
@@ -61,7 +62,7 @@ plugins:
 
 author:
   name   : "Aditya Chatterjee"
-  avatar : "/assets/images/bio-photo.jpg"
+  #avatar : "/assets/images/bio-photo.jpg"
   bio    : "ML Engineer • CS Master's Student at NYU Courant • Building with LLMs"
   email  : chatterjee2307@gmail.com
   github : adityachatterjeedev
@@ -87,10 +88,19 @@ defaults:
     values:
       layout: home
       author_profile: true
+      navigation: navigation
 
 category_archive:
   type: liquid
   path: /categories/
-tag_archive:
-  type: liquid
-  path: /tags/
+
+# Near the bottom of _config.yml
+navigation:
+  - title: "Home"
+    url: /
+  - title: "Blog"
+    url: /blog/
+
+header_pages:
+  - index.md
+  - blog.md
