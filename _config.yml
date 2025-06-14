@@ -21,7 +21,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Google search results) and in your feed.xml site description.
 #twitter_username: username
 github_username: username
-minimal_mistakes_skin: dark
+minimal_mistakes_skin: default
 search: true
 show_nav: true
 
@@ -94,12 +94,8 @@ category_archive:
   type: liquid
   path: /categories/
 
-# Near the bottom of _config.yml
-navigation:
-  - title: "Home"
-    url: /
-  - title: "Blog"
-    url: /blog/
+mathjax: true
+math: mathjax
 
 header_pages:
   - index.md
