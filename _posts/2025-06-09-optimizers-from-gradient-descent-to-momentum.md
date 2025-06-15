@@ -44,7 +44,11 @@ In this post, we will cover a range of optimization algorithms, starting from ba
 
 ## Gradient Descent
 
-The core idea of gradient descent can be summed up as: given that we are currently at $w_k$, determine the direction in which the function decreases most rapidly and take a step in that direction. Using the linear approximation to $\mathcal{L}$ at $w_k$ given by the Taylor Series, we find that this direction is given by the *negative gradient* of the loss at $w_k$, i.e $s \propto -\nabla \mathcal{L}(w_k)$. However, note that the linear approximation is only good locally around $w_k$, so the step needs to be multiplied by some small constant to keep our steps small. Concretely, $s = -\alpha \nabla \mathcal{L}(w_k)$, where $\alpha > 0$ is known as the **learning rate**. 
+The core idea of gradient descent can be summed up as: given that we are currently at $w_k$, determine the direction in which the function decreases most rapidly and take a step in that direction. Using the linear approximation to $\mathcal{L}$ at $w_k$ given by the Taylor Series, we know that to first-order, 
+\\[
+\mathcal{L}(w_k + s) \approx \mathcal{L}(w_k) + s^T \nabla \mathcal{L}(w_k)
+\\]
+which is minimized when $s \propto -\nabla \mathcal{L}(w_k)$. However, note that the linear approximation is only good locally around $w_k$, so the step needs to be multiplied by some small constant to keep our steps small. Concretely, $s = -\alpha \nabla \mathcal{L}(w_k)$, where $\alpha > 0$ is a tunable hyperparameter known as the **learning rate**. 
 
 In practice, if the loss function is computed over a dataset of $N$ examples, say $\mathcal{L}(w_k) =  \frac{1}{N} \sum_{i=1}^N \ell_i(w_k)$, then gradient descent computes the gradient of the total loss by calculating the individual gradients on each data point and averaging them:
 
@@ -80,13 +84,13 @@ $$
 Despite its appealing simplicity, gradient descent does have a few issues that make it a bad choice for modern machine learning methods:
 1. Gradient descent is only guaranteed to converge to the optimal $w^\*$, i.e the global minimum, if the loss function is convex. However, most machine learning problems are nonconvex, and have very complicated loss surfaces, with many local minima. It's highly likely that if gradient descent finds a minimum, it is merely a local one, and not the global minimum.
 2. Computing the gradient on *every single point* in the dataset at every iteration is very computationally expensive, given that today's machine learning problems use datasets that number in the billions or even trillions of datapoints.
-3. **Saddle points** are critical points where the function is neither at a global maximum or a global minimum. The function may be curving upwards in one direction (like a hill) and downwards in another (like a valley). Training can slow down, or even stop, near a saddle point. What's worse, gradient descent has no way to know that it's at a saddle point.
+3. **Saddle points** are critical points where the function is neither at a global maximum or a global minimum. The function may be curving upwards in one direction (like a hill) and downwards in another (like a valley). Training can stagnate, or even stop, near a saddle point, due to the vanishing gradient in all directions. What's worse, gradient descent has no way to know that it's at a saddle point.
 
 To address issue 1, we turn to **Stochastic Gradient Descent** (SGD), which introduces randomness in exchange for greater computational efficiency.
 
 ## Stochastic Gradient Descent
 
-As we mentioned above, computing the average gradient for every point in the dataset at every iteration is extremely expensive. If the $N$ points in our dataset are numnbered $1, \dots, N$, what if, instead, we sample a random point $i$ from the distribution, calculate the gradient of the loss function $\nabla \ell_i(w_k)$ for that particular point, treat that as an unbiased estimate of the actual gradient at $w_k$, and use that as the direction of the step at a given iteration?
+As we mentioned above, computing the average gradient for every point in the dataset at every iteration is extremely expensive. If the $N$ points in our dataset are numbered $1, \dots, N$, what if, instead, we sample a random point $i$ from the distribution, calculate the gradient of the loss function $\nabla \ell_i(w_k)$ for that particular point, treat that as an unbiased estimate of the actual gradient at $w_k$, and use that as the direction of the step at a given iteration?
 
 Well, that's precisely what Stochastic Gradient Descent does. In practice, we generate a random permutation $\sigma \in S_N$, where $S_N$ is the set of all permutations of the set \\( \\{1, \dots, N\\} \\), instead of sampling a new random point at every iteration. Here's the algorithm:
 
@@ -109,7 +113,7 @@ This process defines one pass over the dataset, which is commonly referred to as
 One epoch is not good enough to converge to a local minimum, and therefore, we typically multiple epochs until we've converged. But, what's our convergence condition in this case? For vanilla gradient descent, we checked if the total gradient's norm was below some stopping point. SGD does not calculate the full gradient, and so we cannot use the same convergence condition. Instead, we typically use a proxy, like
 1. Running the algorithm for some fixed number of epochs.
 2. Tracking the changes in validation loss across epochs, and stopping when the improvement plateaus.
-3. Monitoring the magnitude of gradient updates (using an exponentiallly moving average, for example) stopping when they become sufficiently small.
+3. Monitoring the magnitude of gradient updates (using an exponentially moving average, for example) stopping when they become sufficiently small.
 
 ### Pros and Cons
 
@@ -131,7 +135,7 @@ SGD is a popular optimizer, and has its own strengths and tradeoffs:
 
 ### Mini-batch Gradient Descent
 
-In practice, we interpolate between the extreme cases of vanilla Gradient Descent (where every datapoint is used in every iteration) and SGD (where only one datapoint is used in each iteration) by using "mini-batches". At every iteration, the gradient terms are computed for a small number (like 64, or 128) of randomly chosen points, with the average of those gradients used to compute the step. Mini-batches are typically chosen to be powers of 2 (e.g., 32, 64, 128) because memory access patterns and buffer allocations on GPUs are optimized for powers-of-2 sizes, enabling more efficient use of hardware resources. These sizes are also large enough to leverage data parallelism on modern training hardware. When properly implemented, this decreases the variance in each iteration, improving convergence stability and the speed of training, at the cost of almost zero computational overhead.
+In practice, we interpolate between the extreme cases of vanilla Gradient Descent (where every datapoint is used in every iteration) and SGD (where only one datapoint is used in each iteration) by using "mini-batches". At every iteration, the gradient terms are computed for a small number (like 64, or 128) of randomly chosen points, with the average of those gradients used to compute the step. Mini-batches are typically chosen to be powers of 2 (e.g., 32, 64, 128) because memory access patterns and buffer allocations on GPUs are optimized for powers-of-2 sizes, enabling more efficient use of hardware resources. These sizes are also large enough to leverage data parallelism on modern training hardware. When properly implemented, mini-batches reduce the variation of updates, improving convergence stability and the speed of training, at the cost of almost zero computational overhead.
 
 ## SGD with Momentum
 
@@ -149,7 +153,7 @@ The idea behind momentum is simple yet powerful: instead of using just the curre
 
 Concretely, this is implemented using an exponential moving average (EMA) of past gradients. By smoothing the gradients across time, momentum helps dampen oscillations and accelerates convergence, especially in the directions of consistent descent.
 
-We introduce a velocity term $v_k \in \R^n$, initialized as zero, that acts as the EMA with gradient . At each step, we update this velocity using the current gradient and a momentum parameter $\beta \in [0,1]$. The parameter determines how much of the previous velocity to retain:
+We introduce a velocity term $v_k \in \R^n$, initialized as zero, that acts as the EMA with gradient. At each step, rather than immediately updating $w$ in the direction of the gradient, we update this velocity using the current gradient and a momentum parameter $\beta \in [0,1]$, and use that to shift the weights. This adds inertia to the optimization, helping us smooth out noisy gradients and push through flat regions.
 
 \\[
 \begin{align} 
@@ -160,7 +164,7 @@ w_{k+1} &= w_k + v_{k+1}
 
 Do note that this presentation is only one way to write momentum updates. PyTorch's `torch.optim.sgd` function, for example, uses a slightly different equation.
 
-The momentum parameter $\beta$ generally takes values like 0.9 or 0.99. Momentum-based methods are especially helpful in deep learning scenarios where loss surfaces are high-dimensional and full of ravines and saddle points. By accumulating gradient information, momentum helps escape shallow local minima and converges faster to useful solutions.
+The momentum parameter $\beta$ generally takes values like 0.9 or 0.99. Momentum-based methods are especially helpful in deep learning scenarios where loss surfaces are high-dimensional and full of ravines and saddle points. By accumulating gradient information, momentum reduces oscillations, improves convergence speed in ravines, and helps escape shallow local minima.
 
 ### Nesterov Accelerated Gradient
 
@@ -173,6 +177,20 @@ w_{k+1} &= w_k + v_{k+1}
 \end{align}
 \\]
 
+<figure>
+  <img src="/assets/images/optim-1/nesterov.jpeg" alt="Visual explanation of Nesterov Momentum" style="width:100%;">
+  <figcaption><em>Instead of evaluating gradient at the current position (red circle), we know that our momentum is about to carry us to the tip of the green arrow. With Nesterov momentum we therefore instead evaluate the gradient at this "look-ahead" position. Source: <a href="https://cs231n.github.io/neural-networks-3/" target="_blank" rel="noopener noreferrer">Stanford CS231n</a> </em></figcaption>
+</figure>
+
+
 NAG has been observed in various deep learning applications to converge faster and with fewer oscillations compared to regular momentum. This is especially true in ravines, which are common in the loss surfaces seen in Deep Learning. NAG is backed by stronger convergence guarantees in convex settings (Nesterov's original analysis showed an optimal convergence rate for smooth convex functions). NAG only requires evaluating the gradient at a different point (the lookahead), which is a small extra cost in practice. However, this small cost yields disproportionate benefits.
+
+## Wrap-Up
+
+In this post, we've explored how classical optimization techniques — from plain Gradient Descent to SGD and Momentum — form the backbone of how we train modern machine learning models. Momentum and Nesterov Accelerated Gradient introduce powerful ideas of *inertia* and *foresight*, helping us accelerate training and navigate complex loss landscapes more effectively.
+
+However, one limitation shared by all of these methods is that they use a fixed learning rate across all parameters and throughout training. Wouldn’t it be better if the optimizer could adapt the learning rate on a per-parameter basis, depending on how volatile the gradients are?
+
+That’s precisely the motivation behind modern adaptive optimizers like Adam and AdamW, which combine the benefits of momentum with dynamic, per-parameter learning rates. In the next post, we’ll take a deep dive into how these optimizers work, their mathematical foundations, and why AdamW (**not Adam!**) is often preferred in deep learning today.
 
 > **Note:** *This entire blog exists as a way for me to create an organised set of notes of what I've learned, and is not meant to be as complete as a textbook. Many topics are only mentioned briefly, since I'm already fairly comfortable with them.*
