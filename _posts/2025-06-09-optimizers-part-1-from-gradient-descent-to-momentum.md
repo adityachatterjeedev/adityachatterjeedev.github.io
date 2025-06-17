@@ -10,7 +10,6 @@ description: "Part 1 of common optimizers used in Machine Learning"
 categories: [blog]
 tags: ["Machine Learning", "Deep Learning", "Optimizers", "Mathematics"]
 ---
-> **Disclaimer:** *None of the content in this post was written or edited by LLMs — everything here was written by me.*
 
 ## Introduction
 
@@ -135,7 +134,7 @@ SGD is a popular optimizer, and has its own strengths and tradeoffs:
 
 ### Mini-batch Gradient Descent
 
-In practice, we interpolate between the extreme cases of vanilla Gradient Descent (where every datapoint is used in every iteration) and SGD (where only one datapoint is used in each iteration) by using "mini-batches". At every iteration, the gradient terms are computed for a small number (like 64, or 128) of randomly chosen points, with the average of those gradients used to compute the step. Mini-batches are typically chosen to be powers of 2 (e.g., 32, 64, 128) because memory access patterns and buffer allocations on GPUs are optimized for powers-of-2 sizes, enabling more efficient use of hardware resources. These sizes are also large enough to leverage data parallelism on modern training hardware. When properly implemented, mini-batches reduce the variation of updates, improving convergence stability and the speed of training, at the cost of almost zero computational overhead.
+In practice, we interpolate between the extreme cases of vanilla Gradient Descent (where every datapoint is used in every iteration) and SGD (where only one datapoint is used in each iteration) by using "mini-batches". At every iteration, the gradient terms are computed for a small number (like 64, or 128) of randomly chosen points, with the average of those gradients used to compute the step. Mini-batches are typically chosen to be powers of 2 (e.g., 32, 64, 128) because memory access patterns and buffer allocations on GPUs are optimized for powers-of-2 sizes, enabling more efficient use of hardware resources. These sizes are also large enough to leverage data parallelism on modern training hardware. When properly implemented, mini-batches reduce the variation of updates, improving convergence stability and the speed of training, at the cost of almost zero computational overhead. From here onwards, everything we write about SGD will also apply to Mini-batch gradient descent.
 
 ## SGD with Momentum
 
